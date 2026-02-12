@@ -83,8 +83,8 @@ export const OrderItemSchema = z.object({
     .nonnegative('Quantity must be a non-negative number'),
   image: z.string().min(1, 'Image is required'),
   price: Price('Price'),
-  // size: z.string().optional(),
-  // color: z.string().optional(),
+  size: z.string().optional(),
+  color: z.string().optional(),
 })
 export const ShippingAddressSchema = z.object({
   fullName: z.string().min(1, 'Full name is required'),

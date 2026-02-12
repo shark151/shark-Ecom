@@ -80,8 +80,8 @@
 //             onMouseOver={() => setSelectedImage(index)}
 //             className={`bg-white rounded-lg overflow-hidden ${
 //               selectedImage === index
-//                 ? 'ring-2 ring-blue-500'
-//                 : 'ring-1 ring-gray-300'
+                // ? 'ring-2 ring-blue-500'
+                // : 'ring-1 ring-gray-300'
 //             }`}
 //           >
 //             <Image
@@ -137,14 +137,14 @@ export default function ProductGallery({ images }: { images: string[] }) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
 
-  const imgRef = useRef<HTMLImageElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const zoomRef = useRef<HTMLDivElement>(null)
   const lensRef = useRef<HTMLDivElement>(null)
 
   const zoomLevel = 3 // مستوى التكبير ×3 — يمكنك تغييره إلى 4 أو 5
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    const img = imgRef.current
+    const img = containerRef.current
     const lens = lensRef.current
     const zoom = zoomRef.current
     if (!img || !lens || !zoom) return
@@ -152,8 +152,8 @@ export default function ProductGallery({ images }: { images: string[] }) {
     const rect = img.getBoundingClientRect()
 
     // موقع الماوس داخل الصورة
-    let x = e.clientX - rect.left
-    let y = e.clientY - rect.top
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
 
     if (x < 0 || y < 0 || x > rect.width || y > rect.height) return
 
@@ -196,15 +196,17 @@ export default function ProductGallery({ images }: { images: string[] }) {
 
       {/* الصورة الرئيسية + العدسة */}
       <div
+        ref={containerRef}
         className="relative w-[500px] h-[500px] border overflow-hidden"
         onMouseEnter={() => setShowZoom(true)}
         onMouseLeave={() => setShowZoom(false)}
         onMouseMove={handleMouseMove}
       >
-        <img
-          ref={imgRef}
+        <Image
+          
           src={images[selectedImage]}
           alt="product"
+          fill
           className="w-full h-full object-contain"
         />
 
@@ -226,7 +228,7 @@ export default function ProductGallery({ images }: { images: string[] }) {
       {/* نافذة الزووم على اليمين */}
       <div
         ref={zoomRef}
-        className="w-[400px] h-[500px] border bg-white"
+        className="w-[600px] h-[500px] border bg-white"
         style={{
           backgroundImage: `url(${images[selectedImage]})`,
           backgroundRepeat: 'no-repeat',
