@@ -142,8 +142,8 @@ export default async function ProductDetails(props: {
                         price: round2(product.price),
                         quantity: 1,
                         image: product.images[0],
-                        // size: size || (product.sizes?.[0] ?? null),
-                        // color: color || (product.colors?.[0] ?? null),
+                        size: size || (product.sizes?.[0] ?? null),
+                        color: color || (product.colors?.[0] ?? null),
                       }}
                     />
                   </div>
